@@ -4,44 +4,45 @@ import com.highcapable.yukihookapi.hook.type.android.ContextClass
 import me.hd.wauxv.hook.anno.HookAnno
 import me.hd.wauxv.hook.anno.ViewAnno
 import me.hd.wauxv.hook.base.common.CommonSwitchHooker
-import me.hd.wauxv.hook.base.impl.DescCache
+import me.hd.wauxv.hook.base.data.DescData
 import me.hd.wauxv.hook.base.impl.IDexFindBase
+import me.hd.wauxv.hook.data.HostInfo
 import org.luckypray.dexkit.DexKitBridge
 import org.luckypray.dexkit.wrap.DexMethod
 
 @HookAnno
 @ViewAnno
 object VoipLimitHooker : CommonSwitchHooker(), IDexFindBase {
+    private object VoipLimitMethodIsVoiceUsing : DescData()
+    private object VoipLimitMethodIsMultiTalking : DescData()
+    private object VoipLimitMethodCheckAppBrand : DescData()
+
     override val funcName = "通话限制"
-    override val funcDesc = "移除通话中无法播放视频的限制"
+    override val funcDesc = "将通话中无法播放视频的限制移除"
 
     override fun initOnce() {
         DexMethod(VoipLimitMethodIsVoiceUsing.desc)
-            .getMethodInstance(appClassLoader!!)
+            .getMethodInstance(HostInfo.appClassLoader)
             .hook {
                 beforeIfEnabled {
                     resultFalse()
                 }
             }
         DexMethod(VoipLimitMethodIsMultiTalking.desc)
-            .getMethodInstance(appClassLoader!!)
+            .getMethodInstance(HostInfo.appClassLoader)
             .hook {
                 beforeIfEnabled {
                     resultFalse()
                 }
             }
         DexMethod(VoipLimitMethodCheckAppBrand.desc)
-            .getMethodInstance(appClassLoader!!)
+            .getMethodInstance(HostInfo.appClassLoader)
             .hook {
                 beforeIfEnabled {
                     resultFalse()
                 }
             }
     }
-
-    private object VoipLimitMethodIsVoiceUsing : DescCache()
-    private object VoipLimitMethodIsMultiTalking : DescCache()
-    private object VoipLimitMethodCheckAppBrand : DescCache()
 
     override fun dexFind(initiate: DexKitBridge) {
         VoipLimitMethodIsVoiceUsing.desc = initiate.findMethod {

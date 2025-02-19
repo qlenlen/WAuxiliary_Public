@@ -8,6 +8,7 @@ import com.highcapable.yukihookapi.hook.type.android.ViewClass
 import me.hd.wauxv.hook.anno.HookAnno
 import me.hd.wauxv.hook.anno.ViewAnno
 import me.hd.wauxv.hook.base.common.CommonSwitchHooker
+import me.hd.wauxv.hook.data.HostInfo
 import me.hd.wauxv.hook.data.WechatVersion
 import me.hd.wauxv.hook.data.requireVersion
 
@@ -19,7 +20,7 @@ object MsgDetailHooker : CommonSwitchHooker() {
     override val isAvailable = requireVersion(WechatVersion.WECHAT_8_0_45)
 
     override fun initOnce() {
-        "com.tencent.mm.ui.chatting.g7".toClassOrNull()?.apply {
+        "com.tencent.mm.ui.chatting.g7".toClass(HostInfo.appClassLoader).apply {
             method {
                 name = "onClick"
                 param(ViewClass)
@@ -27,8 +28,8 @@ object MsgDetailHooker : CommonSwitchHooker() {
                 beforeIfEnabled {
                     val view = args(0).cast<View>()!!
                     val tagVar = view.tag
-                    val prClass = "com.tencent.mm.ui.chatting.viewitems.pr".toClass()
-                    val q4Class = "com.tencent.mm.pluginsdk.ui.chat.q4".toClass()
+                    val prClass = "com.tencent.mm.ui.chatting.viewitems.pr".toClass(HostInfo.appClassLoader)
+                    val q4Class = "com.tencent.mm.pluginsdk.ui.chat.q4".toClass(HostInfo.appClassLoader)
                     val msgVar = try {
                         prClass.method { name = "b" }.ignored().get().call(
                             prClass.field { name = "d" }.ignored().get(tagVar).any(),

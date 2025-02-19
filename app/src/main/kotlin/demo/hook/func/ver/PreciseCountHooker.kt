@@ -10,6 +10,7 @@ import me.hd.wauxv.factory.dpFloat
 import me.hd.wauxv.hook.anno.HookAnno
 import me.hd.wauxv.hook.anno.ViewAnno
 import me.hd.wauxv.hook.base.common.CommonSwitchHooker
+import me.hd.wauxv.hook.data.HostInfo
 import me.hd.wauxv.hook.data.WechatVersion
 import me.hd.wauxv.hook.data.requireVersion
 
@@ -26,7 +27,7 @@ object PreciseCountHooker : CommonSwitchHooker() {
          * 类名 com.tencent.mm.ui.MainTabUI
          * 关键 doOnCreate
          */
-        "com.tencent.mm.ui.LauncherUIBottomTabView".toClass().apply {
+        "com.tencent.mm.ui.LauncherUIBottomTabView".toClass(HostInfo.appClassLoader).apply {
             val methodFieldMap = mapOf(
                 "j" to "f", // MainTabUnread
                 "h" to "h", // ContactTabUnread

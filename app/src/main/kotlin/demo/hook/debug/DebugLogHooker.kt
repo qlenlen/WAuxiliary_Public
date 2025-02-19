@@ -9,6 +9,7 @@ import me.hd.wauxv.data.factory.Wauxv
 import me.hd.wauxv.hook.anno.HookAnno
 import me.hd.wauxv.hook.anno.ViewAnno
 import me.hd.wauxv.hook.base.common.CommonSwitchHooker
+import me.hd.wauxv.hook.data.HostInfo
 
 @HookAnno
 @ViewAnno
@@ -17,7 +18,7 @@ object DebugLogHooker : CommonSwitchHooker() {
     override val funcDesc = "调试输出微信所有日志"
 
     override fun initOnce() {
-        "com.tencent.mars.xlog.Xlog".toClass().apply {
+        "com.tencent.mars.xlog.Xlog".toClass(HostInfo.appClassLoader).apply {
             method {
                 name = "logMonitor"
                 param(LongType, IntType, StringClass, StringClass, StringClass, IntType, IntType, LongType, LongType, StringClass)

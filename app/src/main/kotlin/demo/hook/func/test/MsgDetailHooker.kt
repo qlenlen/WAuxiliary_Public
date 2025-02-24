@@ -1,4 +1,4 @@
-package demo.hook.test
+package demo.hook.func.test
 
 import android.app.AlertDialog
 import android.view.View
@@ -10,14 +10,13 @@ import me.hd.wauxv.hook.anno.ViewAnno
 import me.hd.wauxv.hook.base.common.CommonSwitchHooker
 import me.hd.wauxv.hook.data.HostInfo
 import me.hd.wauxv.hook.data.WechatVersion
-import me.hd.wauxv.hook.data.requireVersion
 
 @HookAnno
 @ViewAnno
 object MsgDetailHooker : CommonSwitchHooker() {
-    override val funcName = "[8.0.45]消息详情"
-    override val funcDesc = "显示消息的详细信息"
-    override val isAvailable = requireVersion(WechatVersion.WECHAT_8_0_45)
+    override val funcName = "[测][8.0.45]消息详情"
+    override val funcDesc = "点击消息弹窗显示对应的详细信息代码"
+    override val isAvailable = WechatVersion.V8_0_46.code > HostInfo.versionCode && HostInfo.versionCode >= WechatVersion.V8_0_45.code
 
     override fun initOnce() {
         "com.tencent.mm.ui.chatting.g7".toClass(HostInfo.appClassLoader).apply {

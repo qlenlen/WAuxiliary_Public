@@ -1,5 +1,7 @@
 package demo.hook.func.find
 
+import android.view.View
+import android.widget.Toast
 import com.highcapable.yukihookapi.hook.type.android.ImageViewClass
 import com.highcapable.yukihookapi.hook.type.java.BooleanType
 import com.highcapable.yukihookapi.hook.type.java.FloatType
@@ -16,23 +18,27 @@ import org.luckypray.dexkit.wrap.DexMethod
 @HookAnno
 @ViewAnno
 object RoundAvatarHooker : CommonSwitchHooker(), IDexFindBase {
-    private object RoundAvatarHookerMethod : DescData()
+    private object RoundAvatarMethod : DescData()
 
     override val funcName = "圆形头像"
-    override val funcDesc = "将微信中出现的头像显示为圆形"
+    override val funcDesc = "可自定义微信全局头像渲染的圆形弧度"
+
+    override var onClick: ((View) -> Unit)? = { layoutView ->
+        Toast.makeText(layoutView.context, "暂不支持自定义弧度哦~", Toast.LENGTH_SHORT).show()
+    }
 
     override fun initOnce() {
-        DexMethod(RoundAvatarHookerMethod.desc)
+        DexMethod(RoundAvatarMethod.desc)
             .getMethodInstance(HostInfo.appClassLoader)
             .hook {
                 beforeIfEnabled {
-                    args[2] = 0.3f
+                    args(2).set(0.38f)
                 }
             }
     }
 
     override fun dexFind(initiate: DexKitBridge) {
-        RoundAvatarHookerMethod.desc = initiate.findMethod {
+        RoundAvatarMethod.desc = initiate.findMethod {
             matcher {
                 paramTypes(ImageViewClass, StringClass, FloatType, BooleanType)
                 usingEqStrings("MicroMsg.AvatarDrawable")

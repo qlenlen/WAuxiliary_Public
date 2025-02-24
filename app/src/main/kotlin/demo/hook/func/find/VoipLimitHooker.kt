@@ -18,7 +18,7 @@ object VoipLimitHooker : CommonSwitchHooker(), IDexFindBase {
     private object VoipLimitMethodCheckAppBrand : DescData()
 
     override val funcName = "通话限制"
-    override val funcDesc = "将通话中无法播放视频的限制移除"
+    override val funcDesc = "将通话中无法播放视频的弹窗限制移除"
 
     override fun initOnce() {
         DexMethod(VoipLimitMethodIsVoiceUsing.desc)

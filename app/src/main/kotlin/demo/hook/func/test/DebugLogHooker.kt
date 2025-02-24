@@ -1,4 +1,4 @@
-package demo.hook.debug
+package demo.hook.func.test
 
 import android.util.Log
 import com.highcapable.yukihookapi.hook.factory.method
@@ -14,8 +14,8 @@ import me.hd.wauxv.hook.data.HostInfo
 @HookAnno
 @ViewAnno
 object DebugLogHooker : CommonSwitchHooker() {
-    override val funcName = "[测试]调试日志"
-    override val funcDesc = "调试输出微信所有日志"
+    override val funcName = "[测]调试日志"
+    override val funcDesc = "将微信应用所有日志调试输出到控制台"
 
     override fun initOnce() {
         "com.tencent.mars.xlog.Xlog".toClass(HostInfo.appClassLoader).apply {

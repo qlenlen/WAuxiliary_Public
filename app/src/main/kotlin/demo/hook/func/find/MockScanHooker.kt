@@ -21,19 +21,19 @@ object MockScanHooker : CommonSwitchHooker(), IDexFindBase {
     private object MockScanMethod : DescData()
 
     override val funcName = "模拟扫码"
-    override val funcDesc = "将二维码识别方式模拟成微信扫一扫"
+    override val funcDesc = "将二维码识别方式模拟成微信相机扫码"
 
     override fun initOnce() {
         DexMethod(MockScanMethod.desc)
             .getMethodInstance(HostInfo.appClassLoader)
             .hook {
                 beforeIfEnabled {
-                    val source = args[2] as Int
-                    val a8KeyScene = args[3] as Int
+                    val source = args(2).int()
+                    val a8KeyScene = args(3).int()
                     val matchedScene = ScanScene.entries.find { it.source == source && it.a8KeyScene == a8KeyScene }
                     if (matchedScene == ScanScene.ALBUM_SCAN || matchedScene == ScanScene.LONG_PRESS_SCAN) {
-                        args[2] = ScanScene.WECHAT_SCAN.source
-                        args[3] = ScanScene.WECHAT_SCAN.a8KeyScene
+                        args(2).set(ScanScene.WECHAT_SCAN.source)
+                        args(3).set(ScanScene.WECHAT_SCAN.a8KeyScene)
                     }
                 }
             }

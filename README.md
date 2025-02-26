@@ -93,6 +93,11 @@ Wechat 辅助性功能增强
         <td align="center">理论全版本</td>
     </tr>
     <tr>
+        <td align="center">文章多窗</td>
+        <td align="center">✅</td>
+        <td align="center">理论全版本</td>
+    </tr>
+    <tr>
         <td align="center">订阅列表</td>
         <td align="center">✅</td>
         <td align="center">理论全版本</td>
@@ -108,17 +113,17 @@ Wechat 辅助性功能增强
         <td align="center">理论全版本</td>
     </tr>
     <tr>
+        <td align="center">语音时长</td>
+        <td align="center">✅</td>
+        <td align="center">理论全版本</td>
+    </tr>
+    <tr>
         <td align="center">通话限制</td>
         <td align="center">✅</td>
         <td align="center">理论全版本</td>
     </tr>
     <tr>
         <td align="center">消息详情</td>
-        <td align="center">✅</td>
-        <td align="center">8.0.45</td>
-    </tr>
-    <tr>
-        <td align="center">精确数量</td>
         <td align="center">✅</td>
         <td align="center">8.0.45</td>
     </tr>
